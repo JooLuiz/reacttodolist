@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import "./App.css";
 import Todos from "./components/Todos";
+import Header from "./components/layout/Header";
 
 class App extends Component {
   state = {
@@ -23,6 +24,7 @@ class App extends Component {
     ]
   };
 
+  //ToggleComplete
   markComplete = id => {
     this.setState({
       todos: this.state.todos.map(todo => {
@@ -34,13 +36,31 @@ class App extends Component {
     });
   };
 
+  delTodo = id => {
+    this.setState({
+      todos: [...this.state.todos.filter(todo => todo.id !== id)]
+    });
+  };
+
   render() {
     return (
       <div className="App">
-        <Todos todos={this.state.todos} markComplete={this.markComplete} />
+        <Header style={headerStyle} />
+        <Todos
+          todos={this.state.todos}
+          markComplete={this.markComplete}
+          delTodo={this.delTodo}
+        />
       </div>
     );
   }
 }
+
+const headerStyle = {
+  background: "#333",
+  color: "#fff",
+  textAlign: "center",
+  padding: "10px"
+};
 
 export default App;
