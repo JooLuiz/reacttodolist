@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import "./App.css";
 import Todos from "./components/Todos";
 import Header from "./components/layout/Header";
+import AddTodo from "./components/AddTodo";
 
 class App extends Component {
   state = {
@@ -42,25 +43,32 @@ class App extends Component {
     });
   };
 
+  addTodo = title => {
+    const newTodo = {
+      id: this.state.todos.length + 1,
+      title,
+      complete: false
+    };
+    this.setState({
+      todos: [...this.state.todos, newTodo]
+    });
+  };
+
   render() {
     return (
       <div className="App">
-        <Header style={headerStyle} />
-        <Todos
-          todos={this.state.todos}
-          markComplete={this.markComplete}
-          delTodo={this.delTodo}
-        />
+        <div className="container">
+          <Header />
+          <AddTodo addTodo={this.addTodo} />
+          <Todos
+            todos={this.state.todos}
+            markComplete={this.markComplete}
+            delTodo={this.delTodo}
+          />
+        </div>
       </div>
     );
   }
 }
-
-const headerStyle = {
-  background: "#333",
-  color: "#fff",
-  textAlign: "center",
-  padding: "10px"
-};
 
 export default App;
